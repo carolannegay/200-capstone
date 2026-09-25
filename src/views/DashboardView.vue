@@ -94,6 +94,18 @@ const visitorChartData = computed(() => ({
   }],
 }))
 
+const conversionChartData = computed(() => ({
+  labels,
+  datasets: [{
+    label: 'Conversion rate',
+    data: dashboardData.map((item) => item.conversions),
+    backgroundColor: dashboardData.map((item) => selectedMonth.value === 'All' || item.month === selectedMonth.value ? '#4b5fd3' : 'rgba(75, 95, 211, .25)'),
+    borderRadius: 5,
+    borderSkipped: false,
+    maxBarThickness: 34,
+  }],
+}))
+
 const baseChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -139,6 +151,26 @@ const visitorChartOptions = {
       grid: { color: '#e5e9ef' },
       border: { display: false },
       ticks: { callback: (value: string | number) => `${Number(value) / 1000}K` },
+    },
+  },
+}
+
+const conversionChartOptions = {
+  ...baseChartOptions,
+  plugins: {
+    ...baseChartOptions.plugins,
+    tooltip: {
+      ...baseChartOptions.plugins.tooltip,
+      callbacks: { label: (context: { parsed: { y: number | null } }) => ` ${(context.parsed.y ?? 0).toFixed(1)}% conversion rate` },
+    },
+  },
+  scales: {
+    x: { grid: { display: false }, border: { display: false } },
+    y: {
+      beginAtZero: true,
+      grid: { color: '#e5e9ef' },
+      border: { display: false },
+      ticks: { callback: (value: string | number) => `${value}%` },
     },
   },
 }
@@ -191,6 +223,14 @@ const visitorChartOptions = {
           <v-card-text class="chart-wrap"><Line :data="visitorChartData" :options="visitorChartOptions" /></v-card-text>
         </v-card>
       </section>
+
+      <v-card class="chart-card conversion-card" elevation="0">
+        <v-card-item>
+          <template #title><span class="chart-title">Conversion Rate Trend</span></template>
+          <template #subtitle>Percentage of visitors who completed a purchase</template>
+        </v-card-item>
+        <v-card-text class="chart-wrap"><Bar :data="conversionChartData" :options="conversionChartOptions" /></v-card-text>
+      </v-card>
 
       <footer class="dashboard-footer">Data is simulated for demonstration purposes. Protogen 200 Capstone — 2025.</footer>
     </v-container>

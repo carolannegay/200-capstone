@@ -53,6 +53,7 @@ body { margin: 0; min-width: 320px; }
 .trend-down { color: #bd5b50; background: #fff0ed; }
 .charts-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
 .chart-card { min-width: 0; }
+.conversion-card { margin-top: 18px; }
 .chart-title { color: #29364a; font-size: 15px; font-weight: 750; }
 .chart-card .v-card-item__subtitle { color: #929dac !important; font-size: 11px; margin-top: 3px; }
 .dashboard-footer { color: #9aa4b1; font-size: 11px; text-align: center; padding: 30px 0 8px; }
