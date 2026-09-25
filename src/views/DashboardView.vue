@@ -99,10 +99,15 @@ const conversionChartData = computed(() => ({
   datasets: [{
     label: 'Conversion rate',
     data: dashboardData.map((item) => item.conversions),
-    backgroundColor: dashboardData.map((item) => selectedMonth.value === 'All' || item.month === selectedMonth.value ? '#4b5fd3' : 'rgba(75, 95, 211, .25)'),
-    borderRadius: 5,
-    borderSkipped: false,
-    maxBarThickness: 34,
+    borderColor: '#c58a2b',
+    backgroundColor: 'rgba(197, 138, 43, .16)',
+    pointBackgroundColor: dashboardData.map((item) => item.month === selectedMonth.value ? '#c58a2b' : '#fff'),
+    pointBorderColor: '#c58a2b',
+    pointRadius: dashboardData.map((item) => selectedMonth.value === 'All' || item.month === selectedMonth.value ? 5 : 3),
+    pointHoverRadius: 7,
+    fill: true,
+    tension: .36,
+    borderWidth: 3,
   }],
 }))
 
@@ -229,7 +234,7 @@ const conversionChartOptions = {
           <template #title><span class="chart-title">Conversion Rate Trend</span></template>
           <template #subtitle>Percentage of visitors who completed a purchase</template>
         </v-card-item>
-        <v-card-text class="chart-wrap"><Bar :data="conversionChartData" :options="conversionChartOptions" /></v-card-text>
+        <v-card-text class="chart-wrap"><Line :data="conversionChartData" :options="conversionChartOptions" /></v-card-text>
       </v-card>
 
       <footer class="dashboard-footer">Data is simulated for demonstration purposes. Protogen 200 Capstone — 2025.</footer>
